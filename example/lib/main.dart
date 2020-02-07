@@ -17,23 +17,30 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    // requestHKWritePermission().then((status) => (){
-    //   if (status){
-    //     writeSleepEntry();
-    //   }
-    // });
-    writeSleepEntry();
+    FlutterHkWrite.requestWritePermissions.then((status){
+      if (status) {
+        writeQuantityEntry();
+      }
+    });   
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
 
-  Future<bool> requestHKWritePermission() async {
-    bool writePermission = await FlutterHkWrite.requestWritePermissions;
-    return writePermission;
-  }
-
   Future<bool> writeSleepEntry() async {
     bool writingStatus = await FlutterHkWrite.writeSleepEntry(1580630400, 1580644800);
+    return writingStatus;
+  }
+
+  Future<bool> writeQuantityEntry() async {
+    bool writingStatus = await FlutterHkWrite.writeQuantityEntries([
+      {
+        "value" : 3.0,
+        "from": 1580630400,
+        "to" : 1580644800,
+        "type" : "Water",
+        "unit": "liter"
+      }
+    ]);
     return writingStatus;
   }
 
