@@ -137,6 +137,10 @@ public class SwiftFlutterHkWritePlugin: NSObject, FlutterPlugin {
         switch typeKey {
         case "TotalFat":
             return  HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryFatTotal)
+        case "Protein":
+        return  HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryProtein)
+        case "Carbohydrates":
+        return  HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryCarbohydrates)
         case "Water":
             if #available(iOS 9.0, *) {
                 return  HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryWater)
@@ -155,6 +159,8 @@ public class SwiftFlutterHkWritePlugin: NSObject, FlutterPlugin {
         switch unitRaw {
             case "liter":
                 return HKUnit.liter()
+            case "gram":
+                return HKUnit.gram()
             default:
                 return nil
             }
