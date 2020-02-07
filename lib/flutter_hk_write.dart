@@ -23,4 +23,11 @@ class FlutterHkWrite {
     });
     return permission;
   } 
+
+  static Future<bool> writeQuantityEntries(List<Map> entries) async {
+    final bool permission = await _channel.invokeMethod('writeQuantityEntries', {
+      'entries': entries
+    });
+    return permission;
+  } 
 }

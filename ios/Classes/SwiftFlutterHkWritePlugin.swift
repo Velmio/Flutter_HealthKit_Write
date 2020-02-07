@@ -41,14 +41,26 @@ public class SwiftFlutterHkWritePlugin: NSObject, FlutterPlugin {
         
         
             writeSleepEntry(value: "inBed", from: Date(timeIntervalSince1970: Double(from)), to: Date(timeIntervalSince1970: Double(to)), result: result)
+       } else if (call.method == "writeQuantityEntries") {
+         
+        guard
+         let arguments = call.arguments as? Dictionary<String, Any>,
+         let entries = arguments["entries"] as? [[String: Any]]
+        else {
+            print("invalid call arguments")
+            return
+         }
+        writeQuantityTypes(types: entries, result: result)
+        
        }
        else {
             result(FlutterMethodNotImplemented)
         }
     }
-    catch {
-        result(FlutterError(code: "flutter_hk_write", message: "Error \(error)", details: nil))
-    }
+// Reactivate Catch if addtional throw's are needed
+//    catch {
+//        result(FlutterError(code: "flutter_hk_write", message: "Error \(error)", details: nil))
+//    }
     
   }
     
@@ -56,15 +68,35 @@ public class SwiftFlutterHkWritePlugin: NSObject, FlutterPlugin {
         
         //Test Data Types
         
-        let typestoRead = Set([
-            HKObjectType.categoryType(forIdentifier: HKCategoryTypeIdentifier.sleepAnalysis)!
+        var typestoRead = Set([
+            HKObjectType.categoryType(forIdentifier: HKCategoryTypeIdentifier.sleepAnalysis)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryFatTotal)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryProtein)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryCarbohydrates)!,
                ])
         
-        let typestoShare = Set([
-            HKObjectType.categoryType(forIdentifier: HKCategoryTypeIdentifier.sleepAnalysis)!
+        if #available(iOS 9.0, *) {
+            typestoRead.insert(            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryWater)!)
+        } else {
+            // Fallback on earlier versions
+        }
+        
+        
+        var typestoShare = Set([
+            HKObjectType.categoryType(forIdentifier: HKCategoryTypeIdentifier.sleepAnalysis)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryFatTotal)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryProtein)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryCarbohydrates)!,
                ])
         
-        healthStore!.requestAuthorization(toShare: typestoShare, read: typestoRead) { (success, error) -> Void in
+        if #available(iOS 9.0, *) {
+                  typestoShare.insert(            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryWater)!)
+              } else {
+                  // Fallback on earlier versions
+        }
+              
+        
+        healthStore!.requestAuthorization(toShare:typestoShare, read: typestoRead) { (success, error) -> Void in
             if success == false {
                 NSLog(" Display not allowed")
                 result(false)
@@ -74,7 +106,7 @@ public class SwiftFlutterHkWritePlugin: NSObject, FlutterPlugin {
         }
     }
     
-    
+    //Legacy Test Function
     func writeSleepEntry(value: String, from: Date, to: Date, result: @escaping FlutterResult) {
         if let sleepType = HKObjectType.categoryType(forIdentifier: HKCategoryTypeIdentifier.sleepAnalysis) {
            
@@ -98,6 +130,87 @@ public class SwiftFlutterHkWritePlugin: NSObject, FlutterPlugin {
                 }
                 
             })
+        }
+    }
+    
+    func parseType(typeKey: String) -> HKObjectType? {
+        switch typeKey {
+        case "TotalFat":
+            return  HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryFatTotal)
+        case "Water":
+            if #available(iOS 9.0, *) {
+                return  HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryWater)
+            } else {
+                // Fallback on earlier versions
+                return nil
+            }
+        case "Sleep":
+            return HKObjectType.categoryType(forIdentifier: HKCategoryTypeIdentifier.sleepAnalysis)
+        default:
+            return nil
+        }
+    }
+    
+    func parseUnit(unitRaw: String) -> HKUnit? {
+        switch unitRaw {
+            case "liter":
+                return HKUnit.liter()
+            default:
+                return nil
+            }
+    }
+    
+    //TODO: Adapt for other datatypes in HK
+    func writeQuantityTypes(types: [[String: Any]], result: @escaping FlutterResult){
+        for type in types {
+            
+            //Parse input
+            
+            guard
+            let value = type["value"] as? Double,
+            let fromRaw = type["from"] as? Int,
+            let toRaw = type["to"] as? Int,
+            let typeKey = type["type"] as? String,
+            let unitRaw = type["unit"] as? String
+            else {
+                result(FlutterError(code: "flutter_hk_write", message: "Incorrect input", details: nil))
+               return
+            }
+            
+            let from = Date(timeIntervalSince1970: Double(fromRaw))
+            let to = Date(timeIntervalSince1970: Double(toRaw))
+            let identifier = parseType(typeKey: typeKey)
+            let unit = parseUnit(unitRaw: unitRaw)
+            
+            
+            
+            if let healthKitType = identifier {
+                      
+                        let object = HKQuantitySample(type: healthKitType as! HKQuantityType, quantity: HKQuantity(unit: unit!, doubleValue: value), start: from, end: to)
+                
+                                            
+                        healthStore!.save(object, withCompletion: { (success, error) -> Void in
+                            
+                            if error != nil {
+                                // something happened
+                                result(FlutterError(code: "flutter_hk_write", message: "Error: \(String(describing: error))", details: nil))
+                                return
+                                
+                            }
+                            
+                            if success {
+                                print("My new data was saved in HealthKit")
+                                result(true)
+                                
+                            } else {
+                                // something happened again
+                                result(FlutterError(code: "flutter_hk_write", message: "Unable to save", details: nil))
+                            }
+                            
+                        })
+                       
+                
+                   }
         }
     }
     
