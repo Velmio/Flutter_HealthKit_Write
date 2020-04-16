@@ -1,6 +1,6 @@
 name: flutter_hk_write
-description: A new flutter plugin project.
-version: 0.0.1
+description: A small plugin for writing nutrition values into healthkit
+version: 0.0.2
 author:
 homepage:
 

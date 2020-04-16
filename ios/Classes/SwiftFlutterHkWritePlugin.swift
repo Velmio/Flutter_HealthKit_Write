@@ -73,6 +73,20 @@ public class SwiftFlutterHkWritePlugin: NSObject, FlutterPlugin {
             HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryFatTotal)!,
             HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryProtein)!,
             HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryCarbohydrates)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryEnergyConsumed)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryFatSaturated)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryCholesterol)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryFiber)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietarySugar)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryCalcium)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryIron)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryPotassium)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietarySodium)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryVitaminA)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryVitaminC)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryVitaminD)!,
+            
+            
                ])
         
         if #available(iOS 9.0, *) {
@@ -87,6 +101,19 @@ public class SwiftFlutterHkWritePlugin: NSObject, FlutterPlugin {
             HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryFatTotal)!,
             HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryProtein)!,
             HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryCarbohydrates)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryEnergyConsumed)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryFatSaturated)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryCholesterol)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryFiber)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietarySugar)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryCalcium)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryIron)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryPotassium)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietarySodium)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryVitaminA)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryVitaminC)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryVitaminD)!,
+            
                ])
         
         if #available(iOS 9.0, *) {
@@ -150,6 +177,11 @@ public class SwiftFlutterHkWritePlugin: NSObject, FlutterPlugin {
             }
         case "Sleep":
             return HKObjectType.categoryType(forIdentifier: HKCategoryTypeIdentifier.sleepAnalysis)
+        //New Units
+        case "Energy":
+            return HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryEnergyConsumed)
+        case "Saturated fat":
+            return HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryFatSaturated)
         default:
             return nil
         }
@@ -159,8 +191,14 @@ public class SwiftFlutterHkWritePlugin: NSObject, FlutterPlugin {
         switch unitRaw {
             case "liter":
                 return HKUnit.liter()
-            case "gram":
+            case "G":
                 return HKUnit.gram()
+            case "KCAL":
+                return HKUnit.kilocalorie()
+            case "MG":
+                return HKUnit.gramUnit(with: .milli)
+            case "UG":
+                return HKUnit.gramUnit(with: .micro)
             default:
                 return nil
             }
