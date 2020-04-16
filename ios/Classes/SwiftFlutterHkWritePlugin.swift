@@ -162,11 +162,11 @@ public class SwiftFlutterHkWritePlugin: NSObject, FlutterPlugin {
     
     func parseType(typeKey: String) -> HKObjectType? {
         switch typeKey {
-        case "TotalFat":
+        case "Fat":
             return  HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryFatTotal)
         case "Protein":
         return  HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryProtein)
-        case "Carbohydrates":
+        case "Carbohydrate":
         return  HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryCarbohydrates)
         case "Water":
             if #available(iOS 9.0, *) {
