@@ -182,6 +182,26 @@ public class SwiftFlutterHkWritePlugin: NSObject, FlutterPlugin {
             return HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryEnergyConsumed)
         case "Saturated fat":
             return HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryFatSaturated)
+        case "Cholesterol":
+            return HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryCholesterol)
+        case "Fiber":
+            return HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryFiber)
+        case "Sugar":
+            return HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietarySugar)
+        case "Calcium, Ca":
+            return HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryCalcium)
+        case "Iron, Fe":
+            return HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryIron)
+        case "Potassium, K":
+            return HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryPotassium)
+        case "Sodium, Na":
+            return HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietarySodium)
+        case "Vitamin A":
+            return HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryVitaminA)
+        case "Vitamin C":
+            return HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryVitaminC)
+        case "Vitamin D":
+            return HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryVitaminD)
         default:
             return nil
         }
