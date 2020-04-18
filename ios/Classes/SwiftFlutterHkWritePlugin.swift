@@ -202,6 +202,9 @@ public class SwiftFlutterHkWritePlugin: NSObject, FlutterPlugin {
             return HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryVitaminC)
         case "Vitamin D":
             return HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryVitaminD)
+        //Weight
+         case "Body Mass":
+            return HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.bodyMass)
         default:
             return nil
         }
@@ -209,6 +212,10 @@ public class SwiftFlutterHkWritePlugin: NSObject, FlutterPlugin {
     
     func parseUnit(unitRaw: String) -> HKUnit? {
         switch unitRaw {
+            case "kg":
+                return HKUnit.gramUnit(with: .kilo)
+            case "pounds":
+                return HKUnit.pound()
             case "liter":
                 return HKUnit.liter()
             case "G":
