@@ -86,6 +86,17 @@ public class SwiftFlutterHkWritePlugin: NSObject, FlutterPlugin {
             HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryVitaminC)!,
             HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryVitaminD)!,
             HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.bodyMass)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryFolate)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryThiamin)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryRiboflavin)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryNiacin)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryVitaminB6)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryVitaminB12)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryVitaminE)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryZinc)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryVitaminA)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryMagnesium)!
+            
             
             
                ])
@@ -115,6 +126,17 @@ public class SwiftFlutterHkWritePlugin: NSObject, FlutterPlugin {
             HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryVitaminC)!,
             HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryVitaminD)!,
             HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.bodyMass)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryFolate)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryThiamin)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryRiboflavin)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryNiacin)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryVitaminB6)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryVitaminB12)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryVitaminE)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryZinc)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryVitaminA)!,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryMagnesium)!
+            
             
                ])
         
@@ -179,7 +201,6 @@ public class SwiftFlutterHkWritePlugin: NSObject, FlutterPlugin {
             }
         case "Sleep":
             return HKObjectType.categoryType(forIdentifier: HKCategoryTypeIdentifier.sleepAnalysis)
-        //New Units
         case "Energy":
             return HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryEnergyConsumed)
         case "Saturated fat":
@@ -204,9 +225,34 @@ public class SwiftFlutterHkWritePlugin: NSObject, FlutterPlugin {
             return HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryVitaminC)
         case "Vitamin D":
             return HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryVitaminD)
-        //Weight
          case "Body Mass":
             return HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.bodyMass)
+        case "Folate":
+            return HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryFolate)!
+        case "Folic acid":
+            return HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryFolate)!
+        case "Thiamin (Vitamin B1)":
+            return HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryThiamin)!
+        case "Riboflavin (Vitamin B2)":
+            return HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryRiboflavin)!
+        case "Niacin (Vitamin B3)":
+            return HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryNiacin)!
+        case "Vitamin B6":
+            return HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryVitaminB6)!
+        case "Vitamin B12":
+            return HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryVitaminB12)!
+        case "Vitamin E":
+            return HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryVitaminE)!
+        case "Zinc, Zn":
+            return HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryZinc)!
+        case "Retinol (Vitamin A1)":
+            return HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryVitaminA)!
+        case "Magnesium, Mg":
+            return HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryMagnesium)!
+            
+        
+            
+
         default:
             return nil
         }
