@@ -40,7 +40,7 @@ public class SwiftFlutterHkWritePlugin: NSObject, FlutterPlugin {
         
         
         
-            writeSleepEntry(value: "inBed", from: Date(timeIntervalSince1970: Double(from)), to: Date(timeIntervalSince1970: Double(to)), result: result)
+            writeSleepEntry(from: Date(timeIntervalSince1970: Double(from)), to: Date(timeIntervalSince1970: Double(to)), result: result)
        } else if (call.method == "writeQuantityEntries") {
          
         guard
@@ -158,10 +158,10 @@ public class SwiftFlutterHkWritePlugin: NSObject, FlutterPlugin {
     }
     
     //Legacy Test Function
-    func writeSleepEntry(value: String, from: Date, to: Date, result: @escaping FlutterResult) {
+    func writeSleepEntry(from: Date, to: Date, result: @escaping FlutterResult) {
         if let sleepType = HKObjectType.categoryType(forIdentifier: HKCategoryTypeIdentifier.sleepAnalysis) {
            
-            let object = HKCategorySample(type: sleepType, value: HKCategoryValueSleepAnalysis.inBed.rawValue, start: from, end: to)
+            let object = HKCategorySample(type: sleepType, value: HKCategoryValueSleepAnalysis.asleep.rawValue, start: from, end: to)
             
             healthStore!.save(object, withCompletion: { (success, error) -> Void in
                 
