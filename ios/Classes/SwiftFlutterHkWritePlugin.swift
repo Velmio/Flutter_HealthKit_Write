@@ -270,6 +270,8 @@ public class SwiftFlutterHkWritePlugin: NSObject, FlutterPlugin {
                 return HKUnit.pound()
             case "liter":
                 return HKUnit.liter()
+            case "ml":
+                return HKUnit.literUnit(with: .milli)
             case "fluid ounce":
                 return HKUnit.fluidOunceUS()
             case "G":
