@@ -96,6 +96,7 @@ public class SwiftFlutterHkWritePlugin: NSObject, FlutterPlugin {
             HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryZinc)!,
             HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryVitaminA)!,
             HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryMagnesium)!
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryCaffeine)!
             
             
             
@@ -136,6 +137,7 @@ public class SwiftFlutterHkWritePlugin: NSObject, FlutterPlugin {
             HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryZinc)!,
             HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryVitaminA)!,
             HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryMagnesium)!
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryCaffeine)!
             
             
                ])
@@ -249,6 +251,8 @@ public class SwiftFlutterHkWritePlugin: NSObject, FlutterPlugin {
             return HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryVitaminA)!
         case "Magnesium, Mg":
             return HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryMagnesium)!
+        case "Caffeine":
+            return HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryCaffeine)!
             
         
             
@@ -266,6 +270,8 @@ public class SwiftFlutterHkWritePlugin: NSObject, FlutterPlugin {
                 return HKUnit.pound()
             case "liter":
                 return HKUnit.liter()
+            case "fluid ounce":
+                return HKUnit.fluidOunceUS()
             case "G":
                 return HKUnit.gram()
             case "KCAL":
