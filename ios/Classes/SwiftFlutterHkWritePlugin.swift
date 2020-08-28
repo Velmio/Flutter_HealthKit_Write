@@ -331,7 +331,9 @@ public class SwiftFlutterHkWritePlugin: NSObject, FlutterPlugin {
             let fromRaw = type["from"] as? Int,
             let toRaw = type["to"] as? Int,
             let typeKey = type["type"] as? String,
-            let unitRaw = type["unit"] as? String
+            let unitRaw = type["unit"] as? String,
+            let metadataId = type["id"] as? String,
+            let metadataVersion = type["version"] as? Int
             else {
                 result(FlutterError(code: "flutter_hk_write", message: "Incorrect input", details: nil))
                return
@@ -345,8 +347,19 @@ public class SwiftFlutterHkWritePlugin: NSObject, FlutterPlugin {
             
             
             if let healthKitType = identifier {
+                
+                        var metadata = [String: Any]()
+                        if #available(iOS 11.0, *) {
+                            metadata[HKMetadataKeySyncIdentifier] = metadataId
+                            metadata[HKMetadataKeySyncVersion] = NSNumber(value: metadataVersion)
+                        } else {
+                            // Fallback on earlier versions
+                            result(FlutterError(code: "flutter_hk_write", message: "Incorrect OS version", details: nil))
+                            return
+                        }
+                
                       
-                        let object = HKQuantitySample(type: healthKitType as! HKQuantityType, quantity: HKQuantity(unit: unit!, doubleValue: value), start: from, end: to)
+                        let object = HKQuantitySample(type: healthKitType as! HKQuantityType, quantity: HKQuantity(unit: unit!, doubleValue: value), start: from, end: to, metadata: metadata)
                 
                                             
                         healthStore!.save(object, withCompletion: { (success, error) -> Void in
