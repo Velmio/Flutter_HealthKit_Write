@@ -11,7 +11,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
- 
   bool _successState;
 
   @override
@@ -20,9 +19,14 @@ class _MyAppState extends State<MyApp> {
     FlutterHkWrite.requestWritePermissions.then((status) {
       if (status) {
         writeQuantityEntry().then((success) {
-          setState(() {
-            _successState = success;
-          });
+          if (success) {
+            FlutterHkWrite.deleteObjectForType('Protein', 'Protein-test')
+                .then((deletionStatus) {
+              setState(() {
+                _successState = deletionStatus;
+              });
+            });
+          }
         });
       }
     });
@@ -75,7 +79,9 @@ class _MyAppState extends State<MyApp> {
           "from": 1580630400,
           "to": 1580644800,
           "type": nutrient,
-          "unit": "MG"
+          "unit": "MG",
+          "id": '$nutrient-test',
+          "version": 1
         }
       ]);
 
