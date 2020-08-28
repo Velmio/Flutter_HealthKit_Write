@@ -62,6 +62,17 @@ public class SwiftFlutterHkWritePlugin: NSObject, FlutterPlugin {
                 }
         
             requestReadWritePermissionsForTypes(types: entries, result: result)
+       }else if (call.method == "deleteObjectForType") {
+             guard
+             let arguments = call.arguments as? Dictionary<String, Any>,
+             let typeKey = arguments["typeKey"] as? String,
+             let objId = arguments["id"] as? String
+               else {
+                   print("invalid call arguments")
+                   return
+                }
+        
+            deleteObjectForType(typeKey: typeKey, id: objId, result: result)
        }
        else {
             result(FlutterMethodNotImplemented)
@@ -318,6 +329,30 @@ public class SwiftFlutterHkWritePlugin: NSObject, FlutterPlugin {
             default:
                 return nil
             }
+    }
+    
+    func deleteObjectForType(typeKey: String, id: String,result: @escaping FlutterResult){
+        let predicate = HKQuery.predicateForObjects(withMetadataKey: id)
+        let type = parseType(typeKey: typeKey)
+        if let healthKitType = type {
+            if #available(iOS 9.0, *) {
+                healthStore!.deleteObjects(of: healthKitType, predicate: predicate, withCompletion: {(success, deletedObjectCount, error) in
+                    if (error != nil) {
+                        print("\(String(describing: error))")
+                        result(FlutterError(code: "flutter_hk_write", message: error?.localizedDescription, details: nil))
+                        return
+                    } else if (success) {
+                        print("\(deletedObjectCount)")
+                        result(true)
+                    } else {
+                        result(false)
+                    }
+                })
+            } else {
+                result(FlutterError(code: "flutter_hk_write", message: "Incorrect OS versiont", details: nil))
+                return
+            }
+        }
     }
     
     //TODO: Adapt for other datatypes in HK

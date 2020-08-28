@@ -29,4 +29,10 @@ class FlutterHkWrite {
         .invokeMethod('writeQuantityEntries', {'entries': entries});
     return permission;
   }
+
+  static Future<bool> deleteObjectForType(String type, String id) async {
+    final bool deletionStatus = await _channel
+        .invokeMethod('deleteObjectForType', {'typeKey': type, 'id': id});
+    return deletionStatus;
+  }
 }
